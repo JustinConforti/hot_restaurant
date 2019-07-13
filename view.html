@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Tables</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Hot Restaurant</h1>
+            <h3>Current Tables and Waiting List</h3>
+            <hr>
+            <a href="/"><button class="btn btn-lg btn-default">
+                <span class="fa fa-home"></span> Home </button></a>
+            <a href="/reservation"><button class="btn btn-danger btn-lg"><span class="fa fa-eye"></span> Reservations</button></a>
+            
+              </button>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <!-- 
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3><strong>Character Search</strong></h3>
+          </div>
+          <div class="card-body">
+            <input type="text" id="character-search" class="form-control">
+            <br>
+            <div class="text-right">
+              <button type="submit" class="btn btn-primary btn-md" id="search-btn"><span
+                  class="fa fa-search"></span> Search
+                Your Feelings. You know it is true.</button>
+            </div>
+          </div>
+        </div> -->
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Current Reservations</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul id="tableList" class="list-group"></ul>
+                    </div>
+                </div>
+                <div class="card">
+                        <div class="card-header">
+                            <h4>Current Wait-List</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul id="waitTableList" class="list-group"></ul>
+                        </div>
+                    </div>
+                    <a href="#" id="clear">Clear Table</a>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        populateTableList()
+        function populateTableList() {
+            $.get("/tables/currentTable", function (tableData) {
+                console.log(tableData[0].id)
+                console.log("In")
+                for (let i = 0; i < tableData.length; i++) {
+                    let table = $("#tableList");
+                    var eachTable = $("<li class='list-group-item mt-4'>");
+                    eachTable.append(
+                        $("<h2>").text("Table #:" + (i + 1)),
+                        $("<hr>"),
+                        $("<h2>").text("ID:  " + tableData[i].id),
+                        $("<h2>").text("Name:  " + tableData[i].name),
+                        $("<h2>").text("Email:  " + tableData[i].email),
+                        $("<h2>").text("Phone:  " + tableData[i].phone)
+                    )
+                    table.append(eachTable);
+                }
+            })
+        }
+         function populateWaitList() {
+             $.get("/tables/res", function(waitData){
+                 console.log(waitData)
+                 for (let i = 0; i < waitData.length; i++) {
+                     let table = $("#waitTableList");
+                     let eachTable = $("<li class ='list-group-item mt-4'>")
+                     eachTable.append(
+                         $("<h2>").text("Table #:  " + (i+1)),
+                         $("<hr>"),
+                         $("<h2>").text("ID:  " + waitData[i].id),
+                         $("<h2>").text("Name:  " + waitData[i].name),
+                         $("<h2>").text("Email:  " + waitData[i].email),
+                         $("<h2>").text("Phone:  " + waitData[i].phone)
+                     )
+                     table.append(eachTable)
+                 }
+             })
+         }
+         populateWaitList()
+
+         function clearTable() {
+   alert("Clearing...");
+
+   // Clear the tables on the server and then empty the elements on the client
+   $.post("/clear", function(clear) {
+     $("#waitTableList").empty();
+     $("#tableList").empty();
+   });
+ }
+
+ $("#clear").on("click", clearTable);
+
+
+    </script>
+</body>
+</html>

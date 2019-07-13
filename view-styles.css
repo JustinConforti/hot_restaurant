@@ -1,0 +1,7 @@
+h1, .jumbotron > h3, .links {
+    text-align: center;
+}
+
+ul li  {
+    display: inline;
+}

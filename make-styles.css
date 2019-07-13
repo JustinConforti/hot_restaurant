@@ -1,0 +1,15 @@
+.container {
+    width: 1500px;
+    margin: 0 auto;
+}
+
+h1, .jumbotron > h3 {
+    text-align: center;
+}
+
+.links {
+    text-align: center;
+}
+ul li  {
+    display: inline;
+}

@@ -1,0 +1,13 @@
+h1, .lead, .buttons {
+    text-align: center;
+}
+
+ul li  {
+    display: inline;
+}
+
+.jumbotron {
+    width: 1500px;
+    margin: 0 auto;
+}
+
